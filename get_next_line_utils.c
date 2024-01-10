@@ -6,7 +6,7 @@
 /*   By: baiannon <baiannon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:46:47 by baiannon          #+#    #+#             */
-/*   Updated: 2024/01/04 16:43:42 by baiannon         ###   ########.fr       */
+/*   Updated: 2024/01/08 17:35:14 by baiannon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlen(const char *s)
 char	*ft_strchr(const char *s, int c)
 {
 	int	i;
-	
+
 	c = 10;
 	i = 0;
 	while (s[i])

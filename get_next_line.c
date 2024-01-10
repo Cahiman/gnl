@@ -6,7 +6,7 @@
 /*   By: baiannon <baiannon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:46:18 by baiannon          #+#    #+#             */
-/*   Updated: 2024/01/04 18:57:41 by baiannon         ###   ########.fr       */
+/*   Updated: 2024/01/08 17:36:53 by baiannon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 char	*get_line(int fd, char *saved)
 {
-	char	*buff;
+	char		*buff;
 	char		*tmp;
 	int			n;
-	
+
 	buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	n = 1;
 	if (!saved)
@@ -26,28 +26,26 @@ char	*get_line(int fd, char *saved)
 	while (n && !ft_strchr(buff, '\n'))
 	{
 		n = read(fd, buff, BUFFER_SIZE);
+		if (n == -1)
+			return (free(buff), free(saved), NULL);
 		buff[n] = '\0';
 		tmp = saved;
 		saved = ft_strjoin(saved, buff);
 		free(tmp);
 	}
-	if (!*saved)
-	{
-		free(saved);
-		free(buff);
-		return (NULL);
-	}
+	if (!saved[0] != '\0')
+		return (free(saved), free(buff), NULL);
 	free(buff);
 	return (saved);
 }
 
 char	*after_return(char *stash)
 {
-	char *next;
-	int	i;
-	int	j;
-	int	k;
-	
+	char	*next;
+	int		i;
+	int		j;
+	int		k;
+
 	i = 0;
 	while (stash[i] != '\n' && stash[i] != '\0')
 		i++;
@@ -72,10 +70,10 @@ char	*after_return(char *stash)
 char	*before_return(char *stash)
 {
 	char	*line;
-	int	i;
+	int		i;
 
 	i = 0;
-	while(stash[i] != '\n' && stash[i] != '\0')
+	while (stash[i] != '\n' && stash[i] != '\0')
 		i++;
 	if (stash[i] == '\n')
 		i++;
@@ -93,30 +91,37 @@ char	*before_return(char *stash)
 	return (line);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char	*stash;
-	char	*tmp;
+	static char		*stash;
+	char			*tmp;
 
 	stash = get_line(fd, stash);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	if (!stash)
 		return (NULL);
+	if (!*stash)
+	{
+		free(stash);
+		return (NULL);
+	}
 	tmp = stash;
 	stash = after_return(stash);
-	if (!*stash)
-		free(stash);
 	return (before_return(tmp));
 }
 
-int	main(int ac,)
-{
-	char *line;
-	
-	int	fd = open("test.txt", O_RDONLY);
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-	line = get_next_line(fd);
-	printf("%s", line);
-	free(line);
-}
+// int	main(int ac, char **av)
+// {
+// 	(void)ac;
+// 	int	fd = open(av[1], O_RDONLY);
+// 	char *line;
+
+// 	while ((line = get_next_line(fd)))
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	printf("%s", line);
+// }

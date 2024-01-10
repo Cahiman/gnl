@@ -6,12 +6,13 @@
 /*   By: baiannon <baiannon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:46:30 by baiannon          #+#    #+#             */
-/*   Updated: 2024/01/04 17:09:57 by baiannon         ###   ########.fr       */
+/*   Updated: 2024/01/08 17:37:22 by baiannon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
 # endif
